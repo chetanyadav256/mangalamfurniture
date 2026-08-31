@@ -9,10 +9,10 @@ from .models import Category, Item, ItemImage
 class ItemImageInline(admin.TabularInline):
     model = ItemImage
     form = ItemImageAdminForm
-    extra = 1
+    extra = 2
     fields = ("image_preview", "image", "alt_text", "is_primary", "display_order")
     readonly_fields = ("image_preview",)
-    verbose_name_plural = "Photos"
+    verbose_name_plural = "Photos (upload one or more)"
 
     @admin.display(description="Current photo")
     def image_preview(self, obj):

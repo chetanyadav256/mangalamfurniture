@@ -1,0 +1,42 @@
+:root {
+  --manglam-ink: #29231d;
+  --manglam-amber: #b56b22;
+  --manglam-cream: #fbf8f2;
+  --manglam-line: #e6ded2;
+  --manglam-green: #45634e;
+}
+
+body, #container { background: var(--manglam-cream); }
+#header { background: var(--manglam-ink); min-height: 58px; }
+#site-name a { color: #fff; font-size: 20px; letter-spacing: .01em; }
+#site-name strong { color: #e5a25e; font-weight: 700; }
+#site-name span { color: #d6cec2; font-size: 11px; font-weight: 600; letter-spacing: .12em; margin-left: 8px; text-transform: uppercase; }
+#user-tools { color: #d6cec2; }
+#user-tools a { color: #f2c28d; }
+.breadcrumbs { background: #f1eadf; border-bottom: 1px solid var(--manglam-line); color: #6d6256; }
+.breadcrumbs a { color: var(--manglam-amber); }
+#content { max-width: 1440px; }
+.module, .inline-group { border: 1px solid var(--manglam-line); border-radius: 10px; box-shadow: 0 4px 18px rgba(67, 47, 27, .05); overflow: hidden; }
+.module h2, .module caption, .inline-group h2 { background: #eee4d5; color: var(--manglam-ink); font-size: 14px; letter-spacing: .02em; }
+.form-row { border-bottom-color: var(--manglam-line); padding: 15px 12px; }
+.form-row label { color: #51483e; font-weight: 600; }
+.form-row .help, .help { color: #817568; font-size: 12px; line-height: 1.45; }
+input, textarea, select, .selector select { border: 1px solid #cec3b5; border-radius: 6px; min-height: 36px; padding: 6px 9px; }
+textarea { min-height: 110px; }
+input:focus, textarea:focus, select:focus { border-color: var(--manglam-amber); box-shadow: 0 0 0 2px rgba(181, 107, 34, .18); outline: 0; }
+fieldset.collapse h2 { background: #f0ebe4; }
+fieldset.collapse summary, .collapse-toggle { color: var(--manglam-amber); }
+.submit-row { background: #f1eadf; border: 1px solid var(--manglam-line); border-radius: 10px; }
+.button, input[type=submit], input[type=button], .submit-row input { background: var(--manglam-amber); border-radius: 6px; font-weight: 700; }
+.button:hover, input[type=submit]:hover, input[type=button]:hover { background: #934e17; }
+.object-tools a, .addlink, a.addlink { background: var(--manglam-green); border-radius: 6px; }
+.object-tools a:hover, .addlink:hover, a.addlink:hover { background: #304b39; }
+.inline-group .tabular td, .inline-group .tabular th { vertical-align: middle; }
+.inline-group img { box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
+@media (max-width: 767px) {
+  #content { padding: 12px; }
+  #site-name a { font-size: 17px; }
+  #user-tools { font-size: 10px; }
+  .form-row { overflow-x: auto; }
+  .inline-group .tabular { display: block; overflow-x: auto; }
+}
