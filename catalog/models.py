@@ -4,17 +4,18 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=100, help_text="Customer-facing category name, such as Sofa or Bed.")
+    slug = models.SlugField(max_length=100, unique=True, help_text="URL-friendly name; leave blank to generate it automatically.")
+    description = models.TextField(blank=True, help_text="Optional introduction shown at the top of this category.")
     image = models.ImageField(
         upload_to="categories/",
         blank=True,
         null=True,
-        validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
+           validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
+           help_text="Optional category image. Use JPEG, PNG, or WebP up to 10 MB."
     )
-    is_active = models.BooleanField(default=True)
-    display_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True, help_text="Turn off to hide this category from the website.")
+    display_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first in menus.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -38,10 +39,10 @@ class Item(models.Model):
         (OUT_OF_STOCK, "Out of stock"),
     ]
 
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="items")
-    name = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=180, unique=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="items", help_text="Choose the furniture category for this item.")
+    name = models.CharField(max_length=150, help_text="The name customers will see in the catalog.")
+    slug = models.SlugField(max_length=180, unique=True, help_text="URL-friendly name; leave blank to generate it automatically.")
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)], help_text="Regular selling price in INR.")
     discount = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -49,16 +50,17 @@ class Item(models.Model):
         blank=True,
         validators=[MinValueValidator(0)],
         verbose_name="discount (INR)",
+        help_text="Flat amount to subtract from the regular price, in INR. Use 0 for no discount.",
     )
-    description = models.TextField()
-    material = models.CharField(max_length=150, blank=True)
-    dimensions = models.CharField(max_length=100, blank=True)
-    color_variants = models.CharField(max_length=255, blank=True)
-    stock_status = models.CharField(max_length=20, choices=STOCK_STATUS_CHOICES, default=IN_STOCK)
-    warranty_info = models.CharField(max_length=255, blank=True)
-    delivery_info = models.CharField(max_length=255, blank=True)
-    is_featured = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    description = models.TextField(help_text="Describe the item, its comfort, construction, and ideal use.")
+    material = models.CharField(max_length=150, blank=True, help_text="Main materials, such as Sheesham wood or velvet.")
+    dimensions = models.CharField(max_length=100, blank=True, help_text="Format: 72in L x 34in W x 30in H.")
+    color_variants = models.CharField(max_length=255, blank=True, help_text="Comma-separated options, such as Grey, Beige, Maroon.")
+    stock_status = models.CharField(max_length=20, choices=STOCK_STATUS_CHOICES, default=IN_STOCK, verbose_name="availability", help_text="Choose whether customers can currently inquire about this item.")
+    warranty_info = models.CharField(max_length=255, blank=True, help_text="Warranty coverage customers should know about.")
+    delivery_info = models.CharField(max_length=255, blank=True, help_text="Delivery or installation terms for this item.")
+    is_featured = models.BooleanField(default=False, help_text="Show this item in the homepage featured section.")
+    is_active = models.BooleanField(default=True, help_text="Turn off to hide this item without deleting it.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -83,10 +85,11 @@ class ItemImage(models.Model):
     image = models.ImageField(
         upload_to="items/",
         validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
+        help_text="Upload a JPEG, PNG, or WebP image up to 10 MB.",
     )
-    alt_text = models.CharField(max_length=150, blank=True)
-    is_primary = models.BooleanField(default=False)
-    display_order = models.PositiveIntegerField(default=0)
+    alt_text = models.CharField(max_length=150, blank=True, help_text="Short description for accessibility and search engines.")
+    is_primary = models.BooleanField(default=False, help_text="Use this image as the item thumbnail and first gallery image.")
+    display_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first in the gallery.")
 
     class Meta:
         ordering = ["display_order", "id"]
