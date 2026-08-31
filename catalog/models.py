@@ -42,6 +42,14 @@ class Item(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=180, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    discount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        blank=True,
+        validators=[MinValueValidator(0)],
+        verbose_name="discount (INR)",
+    )
     description = models.TextField()
     material = models.CharField(max_length=150, blank=True)
     dimensions = models.CharField(max_length=100, blank=True)
@@ -64,6 +72,10 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def discounted_price(self):
+        return max(self.price - (self.discount or 0), 0)
 
 
 class ItemImage(models.Model):

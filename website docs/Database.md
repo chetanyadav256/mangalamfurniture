@@ -34,6 +34,7 @@
 | `name` | CharField(150) | |
 | `slug` | SlugField(180), unique | used in item detail URL |
 | `price` | DecimalField(10,2) | store in a single currency (INR assumed) |
+| `discount` | DecimalField(10,2), default=0, blank | flat discount amount in INR; cannot be negative |
 | `description` | TextField | full item description |
 | `material` | CharField(150), blank | e.g. "Sheesham Wood, Velvet Upholstery" |
 | `dimensions` | CharField(100), blank | e.g. "72in L x 34in W x 30in H" — free text is simplest for MVP |
