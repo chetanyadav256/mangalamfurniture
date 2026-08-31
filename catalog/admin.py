@@ -24,6 +24,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
     @admin.display(description="Quick add")
     def quick_add_item(self, obj):
+        if not obj.is_active:
+            return format_html('<span class="quiet">Activate category first</span>')
         url = reverse("admin:catalog_item_add")
         return format_html(
             '<a class="button" href="{}?category={}" title="Add an item to {}">+ Add item</a>',
