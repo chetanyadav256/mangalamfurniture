@@ -1,16 +1,19 @@
 from django.contrib import admin
 
+from .forms import CategoryAdminForm, ItemImageAdminForm
 from .models import Category, Item, ItemImage
 
 
 class ItemImageInline(admin.TabularInline):
     model = ItemImage
+    form = ItemImageAdminForm
     extra = 1
     fields = ("image", "alt_text", "is_primary", "display_order")
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    form = CategoryAdminForm
     list_display = ("name", "is_active", "display_order", "updated_at")
     list_filter = ("is_active",)
     search_fields = ("name", "description")
@@ -30,6 +33,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(ItemImage)
 class ItemImageAdmin(admin.ModelAdmin):
+    form = ItemImageAdminForm
     list_display = ("item", "is_primary", "display_order", "alt_text")
     list_filter = ("is_primary",)
     search_fields = ("item__name", "alt_text")
