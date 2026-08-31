@@ -10,6 +10,66 @@
 
 body, #container { background: var(--manglam-cream); }
 #header { background: var(--manglam-ink); min-height: 58px; }
+html[data-theme="dark"], html[data-theme="dark"] body,
+html[data-theme="dark"] #container, html[data-theme="dark"] #main,
+html[data-theme="dark"] #content, html[data-theme="dark"] #content-main,
+html[data-theme="dark"] fieldset, html[data-theme="dark"] .module,
+html[data-theme="dark"] .inline-group, html[data-theme="dark"] .submit-row,
+html[data-theme="dark"] #changelist-form, html[data-theme="dark"] #changelist-filter {
+  background: var(--manglam-cream) !important;
+  color: #304a46 !important;
+}
+
+#content-main fieldset.module, #content-main fieldset.module.aligned,
+#content-main .inline-group, #content-main .submit-row {
+  background: #fff !important;
+  border: 1px solid var(--manglam-line) !important;
+  border-radius: 12px;
+  box-shadow: 0 5px 22px rgba(48, 74, 70, .06);
+}
+#content-main fieldset.module { color: #304a46 !important; padding: 0 16px 10px; }
+#content-main fieldset.module .form-row { background: #fff !important; color: #304a46 !important; }
+#content-main fieldset.module .form-row { border-bottom: 1px solid #eef0f2 !important; }
+#content-main .form-row label, #content-main .form-row p, #content-main .form-row .help,
+#content-main .form-row .readonly { color: #455b56 !important; }
+#content-main input:not([type="submit"]):not([type="button"]),
+#content-main textarea, #content-main select,
+#content-main .selector select, #content-main .selector-filter input {
+  background: #fff !important;
+  color: #1f2937 !important;
+  border: 1px solid #cbd5d1 !important;
+  border-radius: 8px;
+  min-height: 42px;
+  padding: 10px 12px;
+}
+#content-main textarea { min-height: 120px; }
+#content-main input[type="checkbox"] { accent-color: #5d897b; min-height: 18px; width: 18px; }
+#content-main input::placeholder { color: #9ca3af !important; }
+#content-main .submit-row { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; padding: 16px; }
+#content-main .submit-row input { border-radius: 8px; font-size: 14px; min-height: 42px; padding: 0 16px; }
+#content-main .submit-row input[name="_save"] { background: #5d897b !important; color: #fff !important; }
+#content-main .submit-row input[name="_addanother"], #content-main .submit-row input[name="_continue"] { background: #fff !important; border: 1px solid #a9c2b7 !important; color: #41665d !important; }
+#content-main .submit-row button { background: #5d897b !important; border: 0; border-radius: 8px; color: #fff !important; font-size: 14px; min-height: 42px; padding: 0 16px; }
+#content-main .submit-row button:hover { background: #527970 !important; }
+.submit-row { color: #304a46 !important; }
+.submit-row button { background: #5d897b !important; border: 0 !important; border-radius: 8px; color: #fff !important; font-size: 14px; min-height: 42px; padding: 0 16px; }
+.submit-row button:hover { background: #527970 !important; }
+#content-main .submit-row input:hover { filter: brightness(.96); }
+
+/* Keep the native Django file control, but make its light upload surface obvious. */
+#content-main input[type="file"] { background: #f8faf9 !important; border: 1px dashed #a9c2b7 !important; min-height: 48px; padding: 8px; }
+#content-main input[type="file"]::file-selector-button { background: #e4f0e9; border: 1px solid #a9c2b7; border-radius: 6px; color: #41665d; cursor: pointer; font-weight: 700; margin-right: 10px; padding: 8px 12px; }
+
+/* Make login use the same application language as the authenticated admin. */
+.login #container, .login #content-main, .login form { background: #fff !important; }
+.login #content-main { border: 1px solid var(--manglam-line); border-radius: 12px; box-shadow: 0 5px 22px rgba(48, 74, 70, .06); padding: 28px; }
+.login #content-main input[type="text"], .login #content-main input[type="password"] { background: #fff !important; color: #1f2937 !important; min-height: 42px; }
+
+@media (max-width: 600px) {
+  #content-main fieldset.module { padding: 0 8px 8px; }
+  #content-main .submit-row { justify-content: stretch; }
+  #content-main .submit-row input { flex: 1 1 100%; }
+}
 #site-name a { color: #fff; font-size: 20px; letter-spacing: .01em; }
 #site-name strong { color: #b9d3c7; font-weight: 700; }
 #site-name span { color: #c5d4cf; font-size: 11px; font-weight: 600; letter-spacing: .12em; margin-left: 8px; text-transform: uppercase; }
