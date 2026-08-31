@@ -18,8 +18,20 @@ body, #container { background: var(--manglam-cream); }
 .breadcrumbs { background: #e8efea; border-bottom: 1px solid var(--manglam-line); color: var(--manglam-muted); }
 .breadcrumbs a { color: var(--manglam-accent); }
 #content { max-width: 1440px; }
+#content-main { width: 72%; }
+#content-related { width: 25%; }
 .module, .inline-group { border: 1px solid var(--manglam-line); border-radius: 10px; box-shadow: 0 3px 14px rgba(48, 74, 70, .05); overflow: hidden; }
 .module h2, .module caption, .inline-group h2 { background: var(--manglam-panel); color: var(--manglam-ink); font-size: 14px; letter-spacing: .02em; }
+#content-main .module h2, #content-main .module caption, #content-main .inline-group h2 { background: var(--manglam-panel) !important; color: var(--manglam-ink) !important; }
+#content-main .module table { background: #fff !important; }
+#content-main .module table tr, #content-main .module table tr:nth-child(odd), #content-main .module table tr:nth-child(even) { background: #fff !important; }
+#content-main .module table tr:hover { background: #f1f6f2 !important; }
+#content-main .module table th, #content-main .module table td { border-bottom: 1px solid var(--manglam-line); color: #455b56 !important; }
+#content-main .module table th a, #content-main .module table td a { color: #47756d !important; }
+#content-related .module, #content-related .module h2 { background: #fff !important; color: var(--manglam-ink) !important; }
+#content-related .module h2 { border-bottom: 1px solid var(--manglam-line); }
+#content-related .actionlist li { border-bottom: 1px solid var(--manglam-line); }
+#content-related .actionlist li a { color: #47756d !important; }
 .form-row { border-bottom-color: var(--manglam-line); padding: 15px 12px; }
 .form-row label { color: #455b56; font-weight: 600; }
 .form-row .help, .help { color: var(--manglam-muted); font-size: 12px; line-height: 1.45; }
@@ -37,6 +49,7 @@ fieldset.collapse summary, .collapse-toggle { color: var(--manglam-accent); }
 .inline-group img { box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
 @media (max-width: 767px) {
   #content { padding: 12px; }
+  #content-main, #content-related { float: none; width: 100%; }
   #site-name a { font-size: 17px; }
   #user-tools { font-size: 10px; }
   .form-row { overflow-x: auto; }
