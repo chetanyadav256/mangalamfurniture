@@ -1,0 +1,19 @@
+# TechStack.md
+
+| Layer | Choice | Justification |
+|---|---|---|
+| Backend framework | Django (verify latest stable version at build time) | Batteries-included: built-in admin, ORM, auth, and forms cover nearly every MVP need (admin CRUD, contact form, CSRF) with minimal custom code. |
+| Frontend rendering | Django templates (server-rendered HTML) | Catalog site has no complex client-side state; server-rendered pages are simpler to build, are SEO-friendly out of the box, and avoid maintaining a separate API + SPA. |
+| CSS framework | Bootstrap 5 (or Tailwind CSS — pick one; verify latest version) | Either provides a solid responsive grid system and pre-built components (navbar/hamburger menu, cards, carousel) needed for the mobile/tablet/desktop requirement without hand-rolling a grid system. Bootstrap is faster to prototype with a default admin-adjacent site; Tailwind gives more design control if a distinctive look is wanted — team should pick one and stay consistent. |
+| Image gallery (item detail page) | A lightweight JS carousel library (e.g. Swiper.js) or Bootstrap's built-in Carousel component | Needed for a touch-friendly, swipeable gallery on mobile; avoids building custom touch/swipe handling from scratch. Verify latest version before adding. |
+| Database (production) | PostgreSQL | Robust relational DB with strong Django ORM support, handles concurrent admin+read traffic well, and is supported by all major Django-friendly hosts (Render, Railway). |
+| Database (local dev) | SQLite | Zero-setup, file-based — faster local iteration; Django's ORM abstracts differences so switching to Postgres for production is low-risk if migrations are kept clean. |
+| Image storage | Local `MEDIA_ROOT` in development; cloud object storage (e.g. AWS S3, Cloudinary, or Backblaze B2 via `django-storages`) in production | Most VPS/PaaS hosts (Render/Railway) have ephemeral or limited persistent disk; object storage keeps uploaded item images durable across deploys. `django-storages` is the standard package for this — verify latest version. |
+| Admin panel | Django's built-in `django.contrib.admin`, customized via `ModelAdmin` (list filters, inline `ItemImage` editing, search fields) | Fully covers all admin CRUD needs (categories, items, images, shop info, contact messages) with no need to hand-build a custom admin UI — saves significant development time and is a standard, well-tested Django practice. |
+| Authentication | Django's built-in `auth` system (session-based login) for admin only | No customer accounts exist, so only the admin login surface needs auth; Django's default system is secure and requires no extra dependency. |
+| Forms & validation | Django Forms / ModelForms | Built-in CSRF protection, server-side validation, and clean integration with templates — no need for a separate form library. |
+| Image processing (optional) | Pillow (required by Django `ImageField` regardless) + optional `django-imagekit` for thumbnail generation | Pillow is a hard requirement for `ImageField`; imagekit (or manual resizing) helps keep listing-page thumbnails lightweight for mobile performance. Verify latest versions. |
+| Environment/config management | `python-decouple` or `django-environ` | Standard practice to keep secrets (DB credentials, `SECRET_KEY`) out of source control via `.env` files. |
+| Deployment target | Render or Railway (PaaS) — VPS as an alternative | PaaS options handle SSL, process management, and Postgres provisioning with minimal ops overhead, which fits a small business site without a dedicated devops person. See `Deployment.md` for full reasoning. |
+
+> Wherever an exact package version is not stated, **verify the latest stable/compatible version at implementation time** rather than assuming a specific number — package versions change frequently and this document should not be a source of outdated pins.
