@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manglam Furniture handcrafted furniture catalog">
+  <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/site.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-stone-50 text-stone-900">
+  <header class="sticky top-0 z-40 border-b border-stone-200/80 bg-stone-50/95 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <a href="{% url 'core:home' %}" class="font-display text-2xl font-semibold tracking-tight text-stone-900">Manglam <span class="text-amber-700">Furniture</span></a>
+      <button id="menu-toggle" class="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-stone-300 lg:hidden" aria-label="Open menu" aria-expanded="false">☰</button>
+      <nav id="site-nav" class="absolute left-0 right-0 top-full hidden border-b border-stone-200 bg-stone-50 px-5 py-4 lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0" aria-label="Main navigation">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+          <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+          <div class="group relative">
+            <a class="nav-link inline-flex items-center gap-2" href="{% url 'catalog:category-index' %}">Shop <span aria-hidden="true">⌄</span></a>
+            <div class="mt-2 grid gap-1 lg:invisible lg:absolute lg:left-0 lg:top-full lg:mt-4 lg:w-56 lg:rounded-xl lg:border lg:border-stone-200 lg:bg-white lg:p-2 lg:opacity-0 lg:shadow-xl lg:transition group-hover:visible group-hover:opacity-100">
+              {% for category in nav_categories %}<a class="rounded-lg px-3 py-2 text-sm hover:bg-amber-50" href="{% url 'catalog:category-list' category.slug %}">{{ category.name }}</a>{% empty %}<span class="px-3 py-2 text-sm text-stone-500">Catalog coming soon</span>{% endfor %}
+            </div>
+          </div>
+          <a class="nav-link" href="{% url 'shop_info:about' %}">About</a>
+          <a class="nav-link" href="{% url 'shop_info:contact' %}">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  {% if messages %}<div class="mx-auto max-w-7xl px-5 pt-5 lg:px-8">{% for message in messages %}<div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{{ message }}</div>{% endfor %}</div>{% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="mt-20 border-t border-stone-200 bg-stone-900 text-stone-300">
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+      <p class="font-display text-xl text-white">Manglam Furniture</p><p class="text-sm">Thoughtful furniture for everyday living.</p>
+    </div>
+  </footer>
+  <script src="{% static 'core/js/site.js' %}"></script>
+</body>
+</html>

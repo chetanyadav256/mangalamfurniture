@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% block title %}Manglam Furniture | Furniture with feeling{% endblock %}
+{% block content %}
+<section class="hero-band">
+  <div class="mx-auto grid max-w-7xl items-end gap-10 px-5 py-20 sm:py-28 lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:py-36">
+    <div class="reveal"><p class="eyebrow">The Manglam collection</p><h1 class="font-display mt-5 max-w-3xl text-5xl leading-[.98] text-stone-950 sm:text-7xl">Make room for a life well lived.</h1><p class="mt-7 max-w-xl text-lg leading-8 text-stone-700">Warm woods, generous comfort, and furniture chosen to stay with you for years.</p><a href="{% url 'catalog:category-index' %}" class="button-primary mt-9 inline-flex">Explore the collection <span aria-hidden="true">→</span></a></div>
+    <div class="hero-art reveal reveal-delay" aria-hidden="true"><div class="hero-art__chair"></div><div class="hero-art__plant"></div></div>
+  </div>
+</section>
+<section class="mx-auto max-w-7xl px-5 py-16 lg:px-8"><div class="flex items-end justify-between gap-4"><div><p class="eyebrow">Start somewhere beautiful</p><h2 class="section-title">Shop by room</h2></div><a class="text-sm font-semibold text-amber-800" href="{% url 'catalog:category-index' %}">View all →</a></div><div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{% for category in categories %}<a href="{% url 'catalog:category-list' category.slug %}" class="category-tile">{% if category.image %}<img src="{{ category.image.url }}" alt="{{ category.name }}">{% endif %}<span>{{ category.name }}</span></a>{% empty %}<p class="col-span-full text-stone-500">Add categories from the admin to begin your collection.</p>{% endfor %}</div></section>
+<section class="bg-white"><div class="mx-auto max-w-7xl px-5 py-16 lg:px-8"><p class="eyebrow">A considered edit</p><h2 class="section-title">Featured pieces</h2><div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{% for item in featured_items %}{% include 'catalog/_item_card.html' with item=item %}{% empty %}<p class="text-stone-500">Featured pieces will appear here soon.</p>{% endfor %}</div></div></section>
+<section class="trust-strip"><div class="mx-auto grid max-w-7xl gap-6 px-5 py-10 sm:grid-cols-3 lg:px-8"><div><strong>Built to last</strong><span>Materials selected for daily life.</span></div><div><strong>5 year warranty</strong><span>Confidence in every considered detail.</span></div><div><strong>Delivery & installation</strong><span>We make the final step easy.</span></div></div></section>
+{% endblock %}
