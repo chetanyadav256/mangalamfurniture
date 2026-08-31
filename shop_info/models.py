@@ -9,7 +9,7 @@ class ShopInfo(models.Model):
     phone_number = models.CharField(max_length=20)
     whatsapp_number = models.CharField(max_length=20)
     email = models.EmailField(blank=True)
-    opening_hours = models.JSONField(default=dict)
+    opening_hours = models.TextField(default="{}")
     about_text = models.TextField(blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
