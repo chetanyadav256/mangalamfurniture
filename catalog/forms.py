@@ -20,6 +20,9 @@ class CategoryAdminForm(forms.ModelForm):
         model = Category
         fields = "__all__"
 
+    class Media:
+        js = ("catalog/js/image-preview.js",)
+
     def clean_image(self):
         image = self.cleaned_data.get("image")
         validate_image_upload(image)
@@ -30,6 +33,9 @@ class ItemImageAdminForm(forms.ModelForm):
     class Meta:
         model = ItemImage
         fields = "__all__"
+
+    class Media:
+        js = ("catalog/js/image-preview.js",)
 
     def clean_image(self):
         image = self.cleaned_data.get("image")
