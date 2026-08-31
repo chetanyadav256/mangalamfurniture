@@ -13,6 +13,10 @@ class ShopInfo(models.Model):
     about_text = models.TextField(blank=True, help_text="Short story or introduction for the About page.")
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = "Shop information"
+        verbose_name_plural = "Shop information"
+
     def clean(self):
         if self.pk is None and ShopInfo.objects.exists():
             raise ValidationError("Only one shop information record is allowed.")

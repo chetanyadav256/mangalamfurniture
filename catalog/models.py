@@ -21,6 +21,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ["display_order", "name"]
+        verbose_name_plural = "Categories"
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -93,6 +94,7 @@ class ItemImage(models.Model):
 
     class Meta:
         ordering = ["display_order", "id"]
+        verbose_name_plural = "Item images"
 
     def save(self, *args, **kwargs):
         if self.is_primary:
