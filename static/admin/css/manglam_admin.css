@@ -35,9 +35,9 @@ html[data-theme="dark"] #changelist-form, html[data-theme="dark"] #changelist-fi
 #content-main input:not([type="submit"]):not([type="button"]),
 #content-main textarea, #content-main select,
 #content-main .selector select, #content-main .selector-filter input {
-  background: #fff !important;
+  background: #f9fafb !important;
   color: #1f2937 !important;
-  border: 1px solid #cbd5d1 !important;
+  border: 1px solid #e5e7eb !important;
   border-radius: 8px;
   min-height: 42px;
   padding: 10px 12px;
@@ -95,7 +95,7 @@ html[data-theme="dark"] #changelist-form, html[data-theme="dark"] #changelist-fi
 .form-row { border-bottom-color: var(--manglam-line); padding: 15px 12px; }
 .form-row label { color: #455b56; font-weight: 600; }
 .form-row .help, .help { color: var(--manglam-muted); font-size: 12px; line-height: 1.45; }
-input, textarea, select, .selector select { border: 1px solid #c7d5cd; border-radius: 6px; min-height: 36px; padding: 6px 9px; }
+input, textarea, select, .selector select { background: #f9fafb !important; color: #1f2937 !important; border: 1px solid #e5e7eb; border-radius: 6px; min-height: 36px; padding: 6px 9px; }
 textarea { min-height: 110px; }
 input:focus, textarea:focus, select:focus { border-color: var(--manglam-accent); box-shadow: 0 0 0 2px rgba(107, 143, 135, .18); outline: 0; }
 fieldset.collapse h2 { background: #e8efea; }
@@ -122,11 +122,11 @@ fieldset.collapse summary, .collapse-toggle { color: var(--manglam-accent); }
 #content h2, #content h3 { color: #304a46 !important; }
 .breadcrumbs { font-size: 13px; padding: 12px 32px; }
 .breadcrumbs a { font-weight: 600; }
-#nav-sidebar { background: #edf2ed; border-right: 1px solid var(--manglam-line); }
+#nav-sidebar { background: #f0f9f7; border-right: 1px solid var(--manglam-line); }
 #nav-sidebar table { background: transparent !important; }
 #nav-sidebar caption { color: #526a64 !important; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 16px 12px 8px; text-transform: uppercase; }
 #nav-sidebar th, #nav-sidebar td { background: transparent !important; border: 0; color: #455b56 !important; }
-#nav-sidebar tr:hover th, #nav-sidebar tr:hover td { background: #dfeae3 !important; }
+#nav-sidebar tr:hover th, #nav-sidebar tr:hover td { background: #e0f2ed !important; }
 #nav-sidebar a { color: #47756d !important; }
 
 /* Dashboard cards */

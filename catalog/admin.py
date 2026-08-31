@@ -9,10 +9,13 @@ from .models import Category, Item, ItemImage
 class ItemImageInline(admin.TabularInline):
     model = ItemImage
     form = ItemImageAdminForm
-    extra = 2
-    fields = ("image_preview", "image", "alt_text", "is_primary", "display_order")
+    extra = 0
+    max_num = 1
+    min_num = 0
+    fields = ("image_preview", "image", "alt_text", "is_primary")
     readonly_fields = ("image_preview",)
-    verbose_name_plural = "Photos (upload one or more)"
+    verbose_name_plural = "Product image"
+    can_delete = True
 
     @admin.display(description="Current photo")
     def image_preview(self, obj):
@@ -23,6 +26,12 @@ class ItemImageInline(admin.TabularInline):
             obj.image.url,
             obj.alt_text or obj.item.name,
         )
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        formset.max_num = 1
+        formset.extra = 0 if obj and obj.images.exists() else 1
+        return formset
 
 
 @admin.register(Category)
@@ -94,7 +103,7 @@ class ItemAdmin(admin.ModelAdmin):
             ),
         }),
         ("Pricing and availability", {
-            "description": "Set the regular price, optional discount, and current availability.",
+            "description": "Set the regular price, percentage discount, and current availability.",
             "fields": ("price", "discount", "stock_status"),
         }),
         ("Product specifications", {
@@ -107,6 +116,18 @@ class ItemAdmin(admin.ModelAdmin):
             "fields": ("slug", "material", "color_variants", "delivery_info", "is_featured", "is_active"),
         }),
     )
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        item = form.instance
+        images = list(item.images.order_by("id"))
+        if len(images) > 1:
+            keep = images[0]
+            for image in images[1:]:
+                image.delete()
+            if keep:
+                keep.is_primary = True
+                keep.save(update_fields=["is_primary"])
 
     @admin.display(description="Photo")
     def primary_thumbnail(self, obj):

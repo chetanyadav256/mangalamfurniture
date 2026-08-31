@@ -1,0 +1,236 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f1ea 0%, #edf4f0 100%);
+    }
+    #container {
+      max-width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    #content {
+      width: min(100%, 430px);
+      padding: 0;
+      margin: 0;
+    }
+    .login-box {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #e3ded8;
+      border-radius: 24px;
+      box-shadow: 0 25px 55px rgba(27, 32, 29, 0.08);
+      overflow: hidden;
+    }
+    .login-brand {
+      padding: 28px 28px 18px;
+      text-align: center;
+      background: linear-gradient(180deg, #f8f3eb 0%, #ffffff 100%);
+      border-bottom: 1px solid #e8e1d8;
+    }
+    .login-brand__mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: #243c36;
+      color: white;
+      font-family: "Playfair Display", serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      margin-bottom: 12px;
+    }
+    .login-brand h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: -.04em;
+      color: #1f2d2a;
+      font-family: "Playfair Display", serif;
+    }
+    .login-brand p {
+      margin: 8px 0 0;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #7a8b87;
+      font-weight: 700;
+    }
+    .login-panel {
+      padding: 24px 28px 28px;
+    }
+    .login-panel form {
+      display: grid;
+      gap: 16px;
+    }
+    .login-panel label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #516965;
+      margin-bottom: 8px;
+    }
+    .field-wrapper {
+      position: relative;
+    }
+    .field-wrapper input {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #d5d9d3;
+      border-radius: 14px;
+      background: #fff;
+      padding: 0 18px;
+      font-size: 1rem;
+      color: #1f2937;
+      transition: all .2s ease;
+    }
+    .field-wrapper input:focus {
+      border-color: #7e9a92;
+      box-shadow: 0 0 0 4px rgba(126,154,146,0.15);
+      outline: none;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: #526d68;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 8px;
+    }
+    .submit-row {
+      margin-top: 8px;
+    }
+    .submit-row input {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #243c36 0%, #3a5b52 100%);
+      color: white;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 14px 28px rgba(36,60,54,0.18);
+    }
+    .submit-row input:hover {
+      transform: translateY(-1px);
+    }
+    .login-bottom {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .login-bottom a {
+      color: #2f5d57;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .login-bottom a:hover { text-decoration: underline; }
+    .errornote, .errorlist {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #f2c7c7;
+      background: #fff1f1;
+      color: #8b2d2d;
+      list-style: none;
+    }
+    .messages {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+    .messages li {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #edf9f2;
+      border: 1px solid #cce9d6;
+      color: #1f5a3d;
+      font-size: .9rem;
+    }
+    @media (max-width: 480px) {
+      .login-brand, .login-panel { padding-left: 18px; padding-right: 18px; }
+    }
+  </style>
+{% endblock %}
+
+{% block branding %}{% endblock %}
+{% block nav-global %}{% endblock %}
+
+{% block content %}
+<div class="login-box">
+  <div class="login-brand">
+    <div class="login-brand__mark">M</div>
+    <h1>Manglam Furniture</h1>
+    <p>Admin portal</p>
+  </div>
+  <div class="login-panel">
+    {% if form.errors or form.non_field_errors %}
+      <div id="login-errors">
+        {% if form.non_field_errors %}
+          {{ form.non_field_errors }}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post" action="{% url 'admin_login' %}">
+      {% csrf_token %}
+      <div>
+        <label for="id_username">Username or email</label>
+        <div class="field-wrapper">
+          {{ form.username }}
+        </div>
+      </div>
+      <div>
+        <label for="id_password">Password</label>
+        <div class="field-wrapper">
+          {{ form.password }}
+          <button type="button" class="password-toggle" data-password-toggle="id_password" aria-label="Show password">Show</button>
+        </div>
+      </div>
+      <div class="submit-row">
+        <input type="submit" value="Log in" />
+      </div>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <div class="login-bottom">
+      <a href="{% url 'admin_forgot_password' %}">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-password-toggle]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var target = document.getElementById(button.getAttribute('data-password-toggle'));
+        if (!target) return;
+        var isPassword = target.type === 'password';
+        target.type = isPassword ? 'text' : 'password';
+        button.textContent = isPassword ? 'Hide' : 'Show';
+      });
+    });
+  });
+</script>
+{% endblock %}

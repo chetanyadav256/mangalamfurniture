@@ -2,14 +2,19 @@ import dj_database_url
 
 from .base import *
 
-DEBUG = False
-SECRET_KEY = config("SECRET_KEY")
-ALLOWED_HOSTS = [host.strip() for host in config("ALLOWED_HOSTS").split(",") if host.strip()]
-DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"), conn_max_age=600)
+DEBUG = config("DEBUG", default=False, cast=bool)
+SECRET_KEY = config("SECRET_KEY", default="dev-only-change-me")
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in config("ALLOWED_HOSTS", default="localhost,127.0.0.1,.vercel.app,.now.sh").split(",")
+    if host.strip()
+]
+DATABASE_URL = config("DATABASE_URL", default="sqlite:///db.sqlite3")
+DATABASES["default"] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
-SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
+SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=False, cast=bool)
+CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=False, cast=bool)
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True

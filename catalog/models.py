@@ -45,13 +45,13 @@ class Item(models.Model):
     slug = models.SlugField(max_length=180, unique=True, help_text="URL-friendly name; leave blank to generate it automatically.")
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)], help_text="Regular selling price in INR.")
     discount = models.DecimalField(
-        max_digits=10,
+        max_digits=5,
         decimal_places=2,
         default=0,
         blank=True,
         validators=[MinValueValidator(0)],
-        verbose_name="discount (INR)",
-        help_text="Flat amount to subtract from the regular price, in INR. Use 0 for no discount.",
+        verbose_name="discount (%)",
+        help_text="Discount percentage to apply to the regular price. Use 0 for no discount.",
     )
     description = models.TextField(help_text="Describe the item, its comfort, construction, and ideal use.")
     material = models.CharField(max_length=150, blank=True, help_text="Main materials, such as Sheesham wood or velvet.")
@@ -68,17 +68,34 @@ class Item(models.Model):
     class Meta:
         ordering = ["-created_at"]
 
+    def clean(self):
+        super().clean()
+        if self.discount is not None and self.discount > 100:
+            raise models.ValidationError({"discount": "Discount percentage cannot be greater than 100."})
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
     @property
+    def discount_percentage(self):
+        return float(self.discount or 0)
+
+    @property
+    def has_discount(self):
+        return bool(self.discount and self.discount > 0)
+
+    @property
     def discounted_price(self):
-        return max(self.price - (self.discount or 0), 0)
+        if not self.has_discount:
+            return self.price
+        discount_value = (self.price * (self.discount / 100))
+        return max(self.price - discount_value, 0)
 
 
 class ItemImage(models.Model):
