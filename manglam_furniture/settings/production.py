@@ -1,9 +1,11 @@
+import dj_database_url
+
 from .base import *
 
 DEBUG = False
 SECRET_KEY = config("SECRET_KEY")
 ALLOWED_HOSTS = [host.strip() for host in config("ALLOWED_HOSTS").split(",") if host.strip()]
-DATABASES["default"] = config("DATABASE_URL", cast=__import__("dj_database_url").parse)
+DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"), conn_max_age=600)
 
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
 SESSION_COOKIE_SECURE = True
@@ -20,3 +22,4 @@ if config("AWS_STORAGE_BUCKET_NAME", default=""):
     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default=None)
     AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
