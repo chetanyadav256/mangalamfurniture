@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import ContactMessage, ShopInfo
 
@@ -27,9 +28,11 @@ class ShopInfoAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "phone_or_email", "submitted_at", "is_read")
+    list_display = ("name", "phone_or_email", "message_preview", "submitted_at", "is_read")
     list_filter = ("is_read", "submitted_at")
     search_fields = ("name", "phone_or_email", "message")
+    date_hierarchy = "submitted_at"
+    list_per_page = 25
     readonly_fields = ("name", "phone_or_email", "message", "submitted_at")
     fieldsets = (
         ("Customer inquiry", {
@@ -40,3 +43,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
             "fields": ("submitted_at", "is_read"),
         }),
     )
+
+    @admin.display(description="Message")
+    def message_preview(self, obj):
+        message = obj.message.replace("\n", " ")
+        return format_html("{}{}", message[:80], "..." if len(message) > 80 else "")
