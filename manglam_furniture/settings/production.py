@@ -4,11 +4,7 @@ from .base import *
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="dev-only-change-me")
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in config("ALLOWED_HOSTS", default="localhost,127.0.0.1,.vercel.app,.now.sh").split(",")
-    if host.strip()
-]
+ALLOWED_HOSTS = ["*"]
 DATABASE_URL = config("DATABASE_URL", default="sqlite:///db.sqlite3")
 DATABASES["default"] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
